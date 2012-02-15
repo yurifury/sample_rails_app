@@ -4,9 +4,9 @@ gem 'rails', '~> 3.2.1'
 gem 'bcrypt-ruby', '3.0.1'
 gem 'faker', '1.0.1'
 gem 'will_paginate', '3.0.2'
+gem 'pg'
 
 group :development do
-  gem 'sqlite3', '1.3.5'
   gem 'annotate', '~> 2.4.1.beta'
 end
 
@@ -34,8 +34,4 @@ group :test do
   gem 'factory_girl_rails', '1.4.0'
   gem 'cucumber-rails', '1.2.1'
   gem 'database_cleaner', '0.7.0'
-end
-
-group :production do
-  gem 'pg', '0.11.0'
 end
