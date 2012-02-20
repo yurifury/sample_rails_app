@@ -34,4 +34,9 @@ SampleApp::Application.configure do
 
   # Expands the lines which load the assets
   config.assets.debug = true
+
+  # Output pretty (indented) format
+  # For Rails, you'd probably want this line in
+  # config/environments/development.rb
+  Slim::Engine.set_default_options :pretty => true
 end
