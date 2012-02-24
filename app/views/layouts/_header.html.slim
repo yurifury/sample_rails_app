@@ -11,4 +11,6 @@ div.navbar
         - if signed_in?
           li = link_to "Sign out", signout_path, method: :delete
         - else
-          li = link_to "Sign in", signup_path
+          li = link_to "Sign in", signin_path
+
+        li = link_to "Sign up!", signup_path
