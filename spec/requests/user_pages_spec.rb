@@ -6,7 +6,7 @@ describe "User pages" do
   subject { page }
 
   describe "profile page" do
-    let(:user) { FactoryGirl.create(:user) }
+    let(:user) { create(:user) }
     before { visit user_path(user) }
 
     it { should have_heading(user.name) }
@@ -59,5 +59,9 @@ describe "User pages" do
         it { should have_link('Sign out') }
       end
     end
+  end
+
+  describe "edit" do
+    let(:user) { create(:user) }
   end
 end

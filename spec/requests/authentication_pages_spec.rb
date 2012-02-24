@@ -26,7 +26,7 @@ describe "Authentication" do
     end
 
     describe "with valid information" do
-      let(:user) { FactoryGirl.create(:user) }
+      let(:user) { create(:user) }
       before { valid_signin(user) }
 
       it { should have_title(user.name) }
