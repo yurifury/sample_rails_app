@@ -10,3 +10,8 @@ Feature: Signing in
     And the user submits valid signin information
     Then he should see his profile page
     And he should see a signout link
+
+	Scenario: xyz
+		Given a user by the name of "mark"
+		And the email of "someemail@example.com"
+		Then he should see his profile page

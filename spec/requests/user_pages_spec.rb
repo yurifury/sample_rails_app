@@ -63,7 +63,10 @@ describe "User pages" do
 
   describe "edit" do
     let(:user) { create(:user) }
-    before { visit edit_user_path(user) }
+    before do
+      sign_in user
+      visit edit_user_path(user)
+    end
 
     describe "page" do
       it { should have_heading('Edit user') }
@@ -96,6 +99,47 @@ describe "User pages" do
       specify { user.reload.name.should  == new_name }
       specify { user.reload.email.should == new_email }
 
+    end
+  end
+
+  describe "index" do
+
+    let(:user) { create(:user) }
+    before do
+      sign_in user
+      visit users_path
+    end
+
+    it { should have_title('All users') }
+
+    describe "pagination" do
+      before(:all) { 30.times { create(:user) } }
+      after(:all)  { User.delete_all }
+
+      it { should have_link('Next') }
+      it { should have_link('2') }
+
+      it "should list each user" do
+        User.all[0..2].each do |user|
+          page.should have_selector('li', text: user.name)
+        end
+      end
+
+      it { should_not have_link('delete') }
+
+      describe "as an admin user" do
+        let(:admin) { create(:admin) }
+        before do
+          sign_in admin
+          visit users_path
+        end
+
+        it { should have_link('delete', href: user_path(User.first)) }
+        it "should be able to delete another user" do
+          expect { click_link('delete')}.to change(User, :count).by(-1)
+        end
+        it { should_not have_link('delete', href: user_path(admin)) }
+      end
     end
   end
 end

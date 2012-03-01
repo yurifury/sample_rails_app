@@ -4,6 +4,7 @@ gem 'rails', '~> 3.2.1'
 gem 'bcrypt-ruby', '3.0.1'
 gem 'faker', '1.0.1'
 gem 'will_paginate', '3.0.2'
+gem 'bootstrap-will_paginate'
 gem 'pg'
 gem 'slim-rails'
 
