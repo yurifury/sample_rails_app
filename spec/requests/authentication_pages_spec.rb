@@ -11,6 +11,8 @@ describe "Authentication" do
     describe "page" do
       it { should have_heading('Sign in') }
       it { should have_title('Sign in') }
+      it { should_not have_link('Profile') }
+      it { should_not have_link('Settings') }
     end
 
     describe "with invalid information" do
@@ -51,14 +53,24 @@ describe "Authentication" do
       let(:user) { create(:user) }
 
       describe "when attempting to visit a protected page" do
-        before do
-          visit edit_user_path(user)
-          valid_signin(user)
-        end
+        before { visit edit_user_path(user) }
 
         describe "after signing in" do
+          before { valid_signin(user) }
+
           it "should render the desired protected page" do
             page.should have_title('Edit user')
+          end
+
+          describe "when signing in again" do
+            before do
+              visit signin_path
+              valid_signin(user)
+            end
+
+            it "should render the default (profile) page" do
+              page.should have_selector('title', text: user.name)
+            end
           end
         end
       end
@@ -106,6 +118,17 @@ describe "Authentication" do
 
       describe "submitting a DELETE request to the Users#destroy action" do
         before { delete user_path(user) }
+        specify { response.should redirect_to(root_path) }
+      end
+    end
+
+    describe "as an admin user" do
+      let(:admin) { create(:admin) }
+
+      before { sign_in admin }
+
+      describe "trying to delete himself by issuing a DELETE request to the Users#destroy action" do
+        before { delete user_path(admin) }
         specify { response.should redirect_to(root_path) }
       end
     end
