@@ -1,9 +1,0 @@
-- if @user.errors.any?
-  div.alert.alert-block.alert-error
-    h4.alert-heading
-      = pluralize(@user.errors.count, "error")
-      |  prohibited this user from being saved:
-    p There were problems with the following fields:
-    ul
-    - @user.errors.full_messages.each do |msg|
-      li = msg
