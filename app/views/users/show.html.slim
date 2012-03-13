@@ -4,6 +4,10 @@ div.row
     h1
       = gravatar_for @user
       = @user.name
+    - if @user.microposts.any?
+      table.microposts
+        = render @microposts
+      = will_paginate @microposts
   div.span3
     div.well
       strong Name 
@@ -11,3 +15,6 @@ div.row
       br
       strong URL 
       = link_to user_path(@user), @user
+      br
+      strong Microposts 
+      = @user.microposts.count

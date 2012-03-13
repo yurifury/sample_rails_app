@@ -15,6 +15,22 @@ describe "Static pages" do
     let(:page_title) { 'Home' }
 
     it_should_behave_like "all static pages"
+
+    describe "for signed-in users" do
+      let(:user) { create(:user) }
+      before do
+        create(:micropost, user: user, content: "Lorem ipsum")
+        create(:micropost, user: user, content: "Dolor sit amet")
+        sign_in user
+        visit root_path
+      end
+
+      it "should render the user's feed" do
+        user.feed.each do |item|
+          page.should have_selector("tr##{item.id}", text: item.content)
+        end
+      end
+    end
   end
 
   describe "Help page" do
@@ -44,14 +60,14 @@ describe "Static pages" do
   it "should have the right links on the layout" do
     visit root_path
     click_link "About"
-    page.should have_selector 'title', text: full_title('About Us')
+    page.should have_title(full_title('About Us'))
     click_link "Help"
-    page.should have_selector 'title', text: full_title('Help')
+    page.should have_title(full_title('Help'))
     click_link "Contact"
-    page.should have_selector 'title', text: full_title('Contact')
+    page.should have_title(full_title('Contact'))
     click_link "Sample App"
-    page.should have_selector 'title', text: full_title('Home')
+    page.should have_title(full_title('Home'))
     click_link "Sign up now!"
-    page.should have_selector 'title', text: full_title('Sign up')
+    page.should have_title(full_title('Sign up'))
   end
 end

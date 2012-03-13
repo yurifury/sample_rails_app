@@ -1,0 +1,4 @@
+<div class="micropost well" style="padding-right: 200px; position: relative;">
+  <span class="content"><%= micropost.content %></span>
+  <span class="timestamp" style="position: absolute; right: 5px; line-height: 15px; bottom: 5px; color: gray">Posted <%= time_ago_in_words(micropost.created_at) %> ago.</span>
+</div>

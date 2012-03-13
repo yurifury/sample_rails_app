@@ -1,9 +1,19 @@
 - provide :title, 'Home'
-h1 Sample App
+- if signed_in?
+  div.row
+    div.span9
+      h1 What's up?
+      = render 'shared/micropost_form'
+      = render 'shared/feed'
+    div.span3
+      = render 'shared/user_info'
 
-p
-  ' This is the home page for the
-  a href='http://railstutorial.org/' Ruby on Rails Tutorial
-  |  sample application.
+- else
+  h1 Sample App
 
-p = link_to 'Sign up now!', signup_path, class: 'btn btn-primary btn-large'
+  p
+    ' This is the home page for the
+    a href='http://railstutorial.org/' Ruby on Rails Tutorial
+    |  sample application.
+
+  p = link_to 'Sign up now!', signup_path, class: 'btn btn-primary btn-large'
